@@ -1,28 +1,22 @@
-// tests/ai.nav.spec.ts
 import { test, expect } from "@playwright/test";
 
-test.describe("Navigation to Test configuration", () => {
-  test("should navigate to Test configuration docs", async ({ page }) => {
-    test.setTimeout(60_000);
+test("Navigate to Docs → Test configuration", async ({ page }) => {
+  await page.goto("https://playwright.dev/");
 
-    // Open the Playwright homepage
-    await page.goto("https://playwright.dev/");
+  // Click the Docs link in the navbar
+  await page.getByRole("link", { name: "Docs" }).click();
 
-    // Click the "Docs" menu (role-based locators)
-    await page
-      .getByRole("navigation")
-      .getByRole("link", { name: "Docs" })
-      .click();
+  // Click "Test configuration" in the sidebar
+  await page.getByRole("link", { name: "Test configuration" }).click();
 
-    // Click the "Test configuration" link
-    await page.getByRole("link", { name: /^Test configuration$/ }).click();
+  // Assert the H1 is visible
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    /Test configuration/
+  );
 
-    // Assert the H1 "Test configuration" is visible
-    await expect(
-      page.getByRole("heading", { level: 1, name: /^Test configuration$/ })
-    ).toBeVisible();
+  // Verify a specific code block exists
+  await expect(page.locator("pre")).toContainText("projects:");
 
-    // Check the URL contains "/test-configuration"
-    await expect(page).toHaveURL(/\/test-configuration/);
-  });
+  // Verify deep link works
+  await expect(page).toHaveURL(/#projects/);
 });
