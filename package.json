@@ -1,0 +1,24 @@
+{
+  "name": "mcp-playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "playwright": "^1.54.2"
+  },
+  "dependencies": {
+    "@playwright/mcp": "^0.0.33"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:ci": "playwright test --reporter=html",
+    "codegen": "playwright codegen https://playwright.dev/"
+  }
+}
+
+
